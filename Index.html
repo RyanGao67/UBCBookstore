@@ -1,0 +1,179 @@
+<htm lang="en>
+<head>
+	<meta charset="utf-8">
+	<title>UBC CPEN400A - Assignment 2</title>
+	<link rel="stylesheet" href="css/main.css">
+	<script src="javascripts/cart.js" type="text/javascript"></script>
+</head>
+<body>
+    	<div id ="header">
+            <span id="logo"> <img src="images/logo.jpg" width="200" height="200" alt="logo" /></span>
+            <span id="welcomeBanner"><img src="images/WB.jpg" width="700" alt="welcomeBanner" /></span>
+            <button id="showCart" onclick="showCart()">Cart ($0)</button>
+        </div>
+        	<div id="overlay"></div>
+	<div id="overlayContent">
+		<h4> Cart Items </h4>
+		<hr>
+		<table id="cartItems" style ="width:100%"> </table> 
+		<button id = "checkOut" onmousedown="checkOut()" > Check Out </button>
+		<button id= "overlayExit"onmousedown="toggleOverlay()">X</button>
+	</div>
+	<div id="mainContent">
+		<div>
+			<table id ="navigationMenu">
+				<tr>
+					<td><a href="#AllItems">All Items</a>
+					</td>
+				</tr>
+				<tr>
+					<td><a href="#Books">Books</a>
+					</td>
+				</tr>
+				<tr>
+					<td><a href="#Clothing">Clothing</a>
+					</td>
+				</tr>
+				<tr>
+					<td><a href="#Tech">Tech</a>
+					</td>
+				</tr>
+				<tr>
+					<td><a href="#Gifts">Gifts</a>
+					</td>
+				</tr>
+				<tr>
+					<td><a href="#Stationary">Stationary</a>
+					</td>
+				</tr>
+				<tr>
+					<td><a href="#Supplies">Supplies</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id ="productList">
+			
+			<div class="product" id = "Box1">
+				<img class ="productPic" src="" alt = "Box1"  />
+				<img class="cart" src="images/cart.png"  />
+				<p class="desc">Pencil Box</p>
+				<p class="price">asdf </p>
+				<p class="tag"> </p>
+				<button class="addButton" onclick="addToCart('Box1')">Add</button>
+				<button class="removeButton" onclick="removeFromCart('Box1')">Remove</button>
+			</div>
+			<div class="product" id= "Box2">
+				<img class ="productPic" src="" alt = "Box2"  />
+				<img class="cart" src="images/cart.png"  />
+				<p class="desc">Coloured Pencil Boxes</p>
+				<p class="price"> </p>
+				<p class="tag"> </p>
+				<button class="addButton" onclick="addToCart('Box2')">Add</button>
+				<button class="removeButton" onclick="removeFromCart('Box2')">Remove</button>
+			</div>
+			<div class="product" id= "Clothes1">
+				<img class ="productPic" src="" alt = "Clothes1"  />
+				<img class="cart" src="images/cart.png"  />
+				<p class="desc">Red Dress</p>
+				<p class="price"> </p>
+				<p class="tag"> </p>
+				<button class="addButton" onclick="addToCart('Clothes1')">Add</button>
+				<button class="removeButton" onclick="removeFromCart('Clothes1')">Remove</button>
+			</div>
+			<div class="product" id= "Clothes2">
+				<img class ="productPic" src="" alt = "Clothes2"  />
+				<img class="cart" src="images/cart.png"  />
+				<p class="desc">Red Top</p>
+				<p class="price"> </p>
+				<p class="tag"> </p>
+				<button class="addButton" onclick="addToCart('Clothes2')">Add</button>
+				<button class="removeButton" onclick="removeFromCart('Clothes2')">Remove</button>
+			</div>
+			<div class="product" id= "Jeans">
+				<img class ="productPic" src="" alt = "Jeans"  />
+				<img class="cart" src="images/cart.png"  />
+				<p class="desc">Jeans</p>
+				<p class="price"> </p>
+				<p class="tag"> </p>
+				<button class="addButton" onclick="addToCart('Jeans')">Add</button>
+				<button class="removeButton" onclick="removeFromCart('Jeans')">Remove</button>
+			</div>
+			<div class="product" id= "KeyboardCombo">
+				<img class ="productPic" src="" alt = "Keyboard1"  />
+				<img class="cart" src="images/cart.png"  />
+				<p class="desc">Keyboard and Mouse</p>
+				<p class="price"> </p>
+				<p class="tag"> </p>
+				<button class="addButton" onclick="addToCart('KeyboardCombo')">Add</button>
+				<button class="removeButton" onclick="removeFromCart('KeyboardCombo')">Remove</button>
+			</div>
+			<div class="product" id= "Keyboard">
+				<img class ="productPic" src="" alt = "Keyboard2"  />
+				<img class="cart" src="images/cart.png"  />
+				<p class="desc">Keyboard</p>
+				<p class="price"> </p>
+				<p class="tag"> </p>
+				<button class="addButton" onclick="addToCart('Keyboard')">Add</button>
+				<button class="removeButton" onclick="removeFromCart('Keyboard')">Remove</button>
+			</div>
+			<div class="product" id= "Mice">
+				<img class ="productPic" src="" alt = "Mouse"  />
+				<img class="cart" src="images/cart.png"  />
+				<p class="desc">Mouse</p>
+				<p class="price"> </p>
+				<p class="tag"> </p>
+				<button class="addButton" onclick="addToCart('Mice')">Add</button>
+				<button class="removeButton" onclick="removeFromCart('Mice')">Remove</button>
+			</div>
+			<div class="product" id= "PC1">
+				<img class ="productPic" src="" alt = "PC1"  />
+				<img class="cart" src="images/cart.png"  />
+				<p class="desc">Dell PC</p>
+				<p class="price"> </p>
+				<p class="tag"> </p>
+				<button class="addButton" onclick="addToCart('PC1')">Add</button>
+				<button class="removeButton" onclick="removeFromCart('PC1')">Remove</button>
+			</div>
+			<div class="product" id= "PC2">
+				<img class ="productPic" src="" alt = "PC2"  />
+				<img class="cart" src="images/cart.png"  />
+				<p class="desc">PC and Keyboard</p>
+				<p class="price"> </p>
+				<p class="tag"> </p>
+				<button class="addButton" onclick="addToCart('PC2')">Add</button>
+				<button class="removeButton" onclick="removeFromCart('PC2')">Remove</button>
+			</div>
+			<div class="product" id= "PC3">
+				<img class ="productPic" src="" alt = "PC3"  />
+				<img class="cart" src="images/cart.png"  />
+				<p class="desc">PC</p>
+				<p class="price"> </p>
+				<p class="tag"> </p>
+				<button class="addButton" onclick="addToCart('PC3')">Add</button>
+				<button class="removeButton" onclick="removeFromCart('PC3')">Remove</button>
+			</div>
+			<div class="product" id= "Tent">
+				<img class ="productPic" src="" alt = "Tent"  />
+				<img class="cart" src="images/cart.png" />
+				<p class="desc">Tent</p>
+				<p class="price"> </p>
+				<p class="tag"> </p>
+				<button class="addButton" onclick="addToCart('Tent')">Add</button>
+				<button class="removeButton" onclick="removeFromCart('Tent')">Remove</button>
+			</div>
+		</div>
+	</div>
+</body>
+<div id="footer">
+		<div>
+			<p><b>Electrical and Computer Engineering</b></p>
+			<p>2332 Main Mall</p>
+			<p>Vancouver, BC, V6T 1Z4, Canada</p>
+			<p>Tel +1.604.822.2872</p>
+			<p>Fax +1.604.822.5949</p>
+			<p>Email info@ece.ubc.ca</p>
+			<p id = timeout> The current timeout value is 0! </p> 
+		</div>
+	</div>
+</html>
