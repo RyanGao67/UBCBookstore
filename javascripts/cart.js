@@ -1,9 +1,8 @@
-var cart = {};
-var total = 0; 
+var cart = [];
+cart.total = 0; 
 var inactiveTime = 0;
-var oldCart = {};
-var URL = "https://cpen400a-bookstore.herokuapp.com/products";
-var Product=function(name){
+var oldCart = [];
+var Product=function(name,price,imageUrl){
 	this.name=name.name;
 	this.price=name.price;
 	this.imageUrl=name.imageUrl;
@@ -79,14 +78,14 @@ var ifError=function(error){
 	console.log(error);
 	var totalError = 0;
         if (totalError < 10)
-             ajaxGet(URL,ifSuccess,ifError);
+             ajaxGet("https://cpen400a-bookstore.herokuapp.com/products",ifSuccess,ifError);
         else
             alert('Unknown Error');
 }
 
  function ajaxGet(url, successCallback,errorCallback){
 	var productListXhr = new XMLHttpRequest();
-	productListXhr.open("GET", url);
+	productListXhr.open("GET", "https://cpen400a-bookstore.herokuapp.com/products");
 	productListXhr.timeout = 2000;
 	productListXhr.onload = function() {
 		if(productListXhr.status == 200) {
@@ -100,20 +99,20 @@ var ifError=function(error){
 		} else {
 			console.log("Received error code. Status " + productListXhr.status + ". Trying new AJAX call");
 			//productListXhr.send();
-			ajaxGet(url,successCallback,errorCallback);//reuse ajaxGet
+			ajaxGet("https://cpen400a-bookstore.herokuapp.com/products",ifSuccess,ifError);
 		}
 	};
 
 	productListXhr.ontimeout = function() {
 		console.log("Request timeout occurred. Trying new AJAX call.");
-		errorCallback("Request timed out");
+		ifError(timeout);
 		//productListXhr.send();
 	};
 
 	productListXhr.onerror = function() {
 		console.log("Error occurred on request: " + productListXhr.status + " Trying new AJAX call.");
 		//productListXhr.send();
-		errorCallback(productListXhr.status);
+		ifError(onerror);
 	};
 
 	productListXhr.send();
@@ -122,9 +121,8 @@ var ifError=function(error){
 /*confirm price and quantity during checkout, by updating the information from server*/
 
  function ajaxCheckout(url,oldCart,productss){
-
 	var productListXhr = new XMLHttpRequest();
-	productListXhr.open("GET", url);
+	productListXhr.open("GET", "https://cpen400a-bookstore.herokuapp.com/products");
 	productListXhr.timeout = 2000;
 	productListXhr.onload = function() {
 		if(productListXhr.status == 200) {
@@ -150,45 +148,36 @@ var ifError=function(error){
 
 				/* computes the new total amount in the cart*/
 				ifSuccess(Products);
-				total=0;
+				cart.total=0;
 				for(var i in oldCart){
 					if(i!="total"){
-						total+=products[i].product.price*cart[i];
+						cart.total+=products[i].product.price*cart[i];
 						console.log("fasfsafsafasfsafsafsafdsafdsgdsgdsafdsafdsafsdafdsafsafsafdsfsafdsf");
 						console.log(products[i].product.price);
 					}
 				}
 //				configTable();
 				showModal();
-				alert("The total amount due is "+"$"+total+".00");
+				alert("The total amount due is "+"$"+cart.total+".00");
 			
-				var order = JSON.parse('{"cart": ' + JSON.stringify(cart) + ', "total": ' + total +"}");
-				var xhr = new XMLHttpRequest();
-				// xhr.onload = function(){
-				// 	if (xhr.status === 200){
-				// 		alert(xhr.statusText);
-				// 	}
-				// }
-				xhr.open("POST", "http://localhost:8080/checkpoint");
-				xhr.send(JSON.stringify(order));
 			}
 		} else {
 			console.log("Received error code. Status " + productListXhr.status + ". Trying new AJAX call");
 			//productListXhr.send();
-			ajaxCheckout(url,oldCart,productss);
+			ajaxCheckout("https://cpen400a-bookstore.herokuapp.com/products",oldCart,productss);
 		}
 	};
 
 	productListXhr.ontimeout = function() {
 		console.log("Request timeout occurred. Trying new AJAX call.");
-		ajaxCheckout(url,oldCart,productss);
+		ajaxCheckout("https://cpen400a-bookstore.herokuapp.com/products",oldCart,productss);
 		//productListXhr.send();
 	};
 
 	productListXhr.onerror = function() {
 		console.log("Error occurred on request: " + productListXhr.status + " Trying new AJAX call.");
 		//productListXhr.send();
-		ajaxCheckout(URL,oldCart,productss);
+		ajaxCheckout("https://cpen400a-bookstore.herokuapp.com/products",oldCart,productss);
 	};
 
 	productListXhr.send();
@@ -239,7 +228,7 @@ function configModal(){
 		}
 	}
 	var showTotal = document.createElement("tr");
-	showTotal.innerHTML="<td>Total</td>"+"<td></td><td>"+total+"</td>";
+	showTotal.innerHTML="<td>Total</td>"+"<td></td><td>"+cart.total+"</td>";
 	myTable.appendChild(showTotal);
 
 // When the user clicks on <span> (x), close the modal
@@ -262,7 +251,7 @@ function configModal(){
 	oldCart = cart;
 	console.log(oldCart);
 	if (checked){
-	ajaxCheckout(URL,oldCart,products);
+	ajaxCheckout("https://cpen400a-bookstore.herokuapp.com/products",oldCart,products);
 	alert("we'll update the availability and price for you");
 	}
 }
@@ -323,9 +312,9 @@ function addToCart(whichProduct) {
 		console.log("sssssssssssssssssssssssssssssssssssssssssss");
 		console.log(products[whichProduct].product['price']);
 		products[whichProduct].quantity--;
-		total += products[whichProduct].product.computeNetPrice(1);
+		cart.total += products[whichProduct].product.computeNetPrice(1);
 
-		showCartELe.innerHTML = "Cart ($" + total + ")"; 
+		showCartELe.innerHTML = "Cart ($" + cart.total + ")"; 
 		console.log(products[whichProduct].product.computeNetPrice(1));
 		configModal();
 	}
@@ -349,10 +338,10 @@ function removeFromCart(whichProduct) {
 			else{
 				cart[i]--; 				
 			}
-			total = total-products[whichProduct].product['price']; 
+			cart.total = cart.total-products[whichProduct].product['price']; 
 			inCart = true;
 			products[whichProduct].quantity++;
-			showCartELe.innerHTML = "Cart ($" + total + ")"; 
+			showCartELe.innerHTML = "Cart ($" + cart.total + ")"; 
 
 		}
 	}	
@@ -373,6 +362,6 @@ window.onload = function () {
 	timeoutElement = document.getElementById("timeout");
 	showCartELe = document.getElementById("showCart");
     startTimer();
-    ajaxGet(URL,ifSuccess,ifError);
+    ajaxGet("https://cpen400a-bookstore.herokuapp.com/products",ifSuccess,ifError);
 
 };
